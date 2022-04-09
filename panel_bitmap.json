@@ -1,0 +1,9 @@
+{
+    "_lib":"libpanel_bitmap.so",
+    "_instance": [
+        {
+            "name":"bitmap",
+            "type":"bitmap"
+        }
+    ]
+}

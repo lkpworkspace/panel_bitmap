@@ -1,6 +1,6 @@
 # SoftwareFactory's bitmap panel
 
-此panel可以接收ui node数据绘制位图
+该模块配合[uimod_bitmap](https://github.com/lkpworkspace/uimod_bitmap)使用
 
 # 命令格式
 ```json

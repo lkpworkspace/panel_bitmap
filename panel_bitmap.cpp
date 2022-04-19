@@ -5,16 +5,9 @@ namespace sfe {
 class PanelBitmap : public SFEPanel {
 public:
     virtual bool Init() override {
-        // for test
-        _width = 5;
-        _height = 5;
-        _pixels = {
-            0xffffff00, 0xffffffff, 0xffff00ff, 0xffffffff, 0x0, 
-            0xffffffff, 0xffffff00, 0xffff00ff, 0x0, 0xffffffff, 
-            0xffffffff, 0xffffffff, 0x0, 0xffffffff, 0xffffffff, 
-            0xffffffff, 0x0, 0xffff00ff, 0xffffff00, 0xffffffff, 
-            0x0, 0xffffffff, 0xffff00ff, 0xffffffff, 0xffffff00, 
-        };
+        _width = 0;
+        _height = 0;
+        _pixels.clear();
         return true;
     }
 
@@ -37,17 +30,17 @@ public:
             return;
         }
         auto* drawlist = ImGui::GetWindowDrawList();
-        auto scale_x = region_avail_sz.x / _width;
-        auto scale_y = region_avail_sz.y / _height;
+        auto scale_x = region_avail_sz.x / (_width * 1.0f);
+        auto scale_y = region_avail_sz.y / (_height * 1.0f);
         auto scale = scale_x < scale_y ? scale_x : scale_y;
         ImVec2 start_pos(center_pos.x - (_width / 2.0 * scale), center_pos.y - (_height / 2.0 * scale));
-        for (int i = 0; i < _width; ++i) {
-            for (int j = 0; j < _height; ++j) {
-                auto min_x = start_pos.x + j * scale;
-                auto min_y = start_pos.y + i * scale;
+        for (int j = 0; j < _height; ++j) {
+            for (int i = 0; i < _width; ++i) {
+                auto min_x = start_pos.x + i * scale;
+                auto min_y = start_pos.y + j * scale;
                 auto max_x = min_x + scale;
                 auto max_y = min_y + scale;
-                drawlist->AddRectFilled(ImVec2(min_x, min_y), ImVec2(max_x, max_y), _pixels[i * _width + j]);
+                drawlist->AddRectFilled(ImVec2(min_x, min_y), ImVec2(max_x, max_y), _pixels[j * _width + i], 0.0f, ImDrawCornerFlags_None);
             }
         }
         ImGui::End();
